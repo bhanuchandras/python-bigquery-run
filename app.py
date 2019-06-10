@@ -12,7 +12,7 @@ def hello_world():
 @app.route('/top10/<string:lang>',methods=['GET'])
 def getTop10(lang):
     res=query_stackoverflow(lang)
-    return render_template("index.html",items=res,caption="Top 10 Questions in "+lang)
+    return jsonify(results=res)
 
 def query_stackoverflow(lang):
     client = bigquery.Client()
