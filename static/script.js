@@ -14,10 +14,23 @@ function showPage() {
 }
 
 
+function loaddropdown()
+{
+	url = '/tags/'
+	console.log(url)
+	$.getJSON(url,function(json){
+		console.log("success")
+		console.log(json.results)
+		data=json.results
+		for (var i = 0; i < data.length; i++) {
+		   $("#input_v").append("<option value='" + data[i]["tag"] + "'>" + data[i]["tag"] + "</option>");
+		    }
+	});
+}
 
 function callApi()
 {
-    var table = new Tabulator("#tabledata", {
+        var table = new Tabulator("#tabledata", {
  	height:255, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
  	layout:"fitColumns", //fit columns to width of table (optional)
  	columns:[ //Define Table Columns
@@ -26,8 +39,7 @@ function callApi()
 	 	{title:"Views", field:"view_count",width:70},
  	],
 	});
-
-
+	loaddropdown()
         var label = document.getElementById("input_v").value
 	url = '/top10/' + label
 	console.log(url)
@@ -39,4 +51,3 @@ function callApi()
 	});
 
 };
-
