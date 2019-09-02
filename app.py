@@ -41,20 +41,24 @@ def query_stackoverflow(lang):
     print(table_res)
     return table_res
 
-@app.route('/tags',methods=['GET'])
+@app.route('/tags/',methods=['GET'])
 def get_tags():
     client = bigquery.Client()
     q=client.query("""
-            select tag_name from `bigquery-public-data.stackoverflow.tags`
+            select tag_name,count from `bigquery-public-data.stackoverflow.tags`
             where count > 10000
             order by count desc
             """)
     results = q.result()
     tab = []
-    for r in results:
-        tab.append({'tag':row.tag_name})
+    for row in results:
+        #print(row)
+        dict_tab={}
+        dict_tab['tag']=row.tag_name
+        dict_tab['count']=row.count
+        tab.append(dict_tab)
     print(tab)
-    return tab
+    return jsonify(results=tab)
 
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0',port=int(os.environ.get('PORT', 8080)))
