@@ -23,7 +23,7 @@ function loaddropdown()
 		console.log(json.results)
 		data=json.results
 		for (var i = 0; i < data.length; i++) {
-		   $("#input_v").append("<option value='" + data[i]["tag"] + "'>" + data[i]["tag"] + "</option>");
+		   $("#input_v").append("<option value='" + data[i]["tag"] + "'>" + data[i]["tag"] + " (" + data[i]["count"] + ")"  + "</option>");
 		    }
 	});
 }
